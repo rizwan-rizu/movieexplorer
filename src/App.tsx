@@ -1,26 +1,19 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { BrowserRouter, Routes, Route } from "react-router-dom"
+import { roles } from "./utility";
+import ProtectedRoute from "./protectedRoutes";
+import Login from "./Pages/login";
+import Registration from "./Pages/registration";
+import Home from "./Pages/home";
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
-}
+const App = () => (
+  <BrowserRouter>
+    <Routes>
+      <Route path="/" element={<ProtectedRoute role={[roles.ALL]} element={<Home />} />} />
+      <Route path="/login" element={<ProtectedRoute role={[roles.ALL]} element={<Login />} />} />
+      <Route path="/register" element={<ProtectedRoute role={[roles.ALL]} element={<Registration />} />} />
+      {/* <Route path="*" element={<NotFound />} /> */}
+    </Routes>
+  </BrowserRouter>
+)
 
 export default App;
