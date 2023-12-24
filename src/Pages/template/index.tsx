@@ -8,9 +8,11 @@ interface iTemplateProps {
 
 const Template = (props: iTemplateProps) => {
   return (
-    <div className="bg-gray-100 px-7 py-3 h-full">
+    <div className="bg-gray-100 relative">
       <Header />
-      {props.body}
+      <div className="px-7 pb-3">
+        {props.body}
+      </div>
       <Footer />
     </div>
   )
