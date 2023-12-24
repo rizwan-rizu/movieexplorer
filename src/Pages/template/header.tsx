@@ -1,8 +1,7 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faUser } from '@fortawesome/free-regular-svg-icons'
-import SearchModal from '../searchMovie';
 import { faSearch } from '@fortawesome/free-solid-svg-icons';
 import { useState } from 'react';
+import SearchModal from '../searchMovie';
 
 const Header = () => {
   const [modalOpen, setModalOpen] = useState(false);
