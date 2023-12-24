@@ -1,6 +1,5 @@
-import { useEffect, useState } from "react";
-import { addMovieToWatchlist, getMovieDetail, getMovieReviews } from "./api";
-import { iMovie } from "../home/interface";
+import { useContext, useEffect, useState } from "react";
+import { getMovieDetail, getMovieReviews } from "./api";
 import { useParams } from "react-router-dom";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCircle, faBookmark, faHeart } from '@fortawesome/free-regular-svg-icons'
@@ -10,9 +9,12 @@ import LoadingSpinner from "../../common/loadingSpinner";
 import Alert from "../../common/alert";
 import Table from "../../common/table";
 import { castColumn } from "./tableColumn";
+import { StoreContext } from "../../store";
+import { setStorageItem } from "../../utility";
 
 const MovieDetail = () => {
   const { movieId } = useParams()
+  const { app: { favoriteMovies, setFavoriteMovies, watchList, setWatchlist } } = useContext(StoreContext)
   const [movie, setMovie] = useState<any>({})
   const [reviews, setReviews] = useState<any>({})
   const [isLoading, setIsLoading] = useState<boolean>(true)
@@ -25,11 +27,15 @@ const MovieDetail = () => {
   }, [movieId])
 
   const handleAddToWatchlist = () => {
-    addMovieToWatchlist(movie?.id, setShowAlert)
+    let data = [...watchList, movie]
+    setWatchlist(data)
+    setStorageItem("watchList", JSON.stringify(data))
   }
 
   const handleMarkAsFavourite = () => {
-
+    let data = [...favoriteMovies, movie]
+    setFavoriteMovies(data)
+    setStorageItem("favoriteMovies", JSON.stringify(data))
   }
 
   const body = () => (

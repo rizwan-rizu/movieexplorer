@@ -38,19 +38,3 @@ export const getMovieReviews = async (
     setIsReviewLoading(false);
   }
 }
-
-export const addMovieToWatchlist = async (
-  movieId: string | undefined,
-  setShowAlert?: React.Dispatch<React.SetStateAction<{ show: boolean, message: string }>>
-) => {
-  try {
-    const body = { media_type: 'movie', media_id: movieId, watchlist: true }
-    const res = await apiService.post(`/account/${process.env.REACT_APP_ACCOUNT_ID}/watchlist`, body)
-    if (res.status === 201 && res.data.status_code === 1) {
-      setShowAlert && setShowAlert({ show: true, message: "Movie has been added to watchlist" })
-    }
-    else setShowAlert && setShowAlert({ show: true, message: "Failed to add movie to watchlist" })
-  } catch (error) {
-    setShowAlert && setShowAlert({ show: true, message: "Failed to add movie to watchlist" })
-  }
-}

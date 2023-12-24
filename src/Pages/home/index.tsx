@@ -1,13 +1,14 @@
-import { useEffect, useState } from "react";
-import { getTrendingMovies, getWatchlistMovies } from "./api";
+import { useContext, useEffect, useState } from "react";
+import { getTrendingMovies } from "./api";
 import { iMovie } from "./interface";
-import Template from "../template";
 import { useNavigate } from "react-router-dom";
+import { StoreContext } from "../../store";
+import Template from "../template";
 
 const Home = () => {
   const navigate = useNavigate()
+  const { app: { favoriteMovies, watchList } } = useContext(StoreContext)
   const [trendingMovies, setTrendingMovies] = useState<iMovie[]>([])
-  const [watchlist, setWatchlist] = useState<iMovie[]>([])
   const [trendingMoviesPage, setTrendingMoviesPage] = useState<number>(1);
   const [isLoading, setIsLoading] = useState<boolean>(false)
   // const [showAlert, setShowAlert] = useState<{ show: boolean, message: string }>({ show: false, message: '' })
@@ -16,11 +17,8 @@ const Home = () => {
     getTrendingMovies(trendingMoviesPage, setTrendingMovies, setIsLoading)
   }, [trendingMoviesPage])
 
-  useEffect(() => {
-    getWatchlistMovies(1, setWatchlist)
-  }, [])
-
-  const handleScroll = (e: any) => {
+  const handleScroll = (e: any, isInfiniteScroll: boolean) => {
+    if (!isInfiniteScroll) return
     const { scrollWidth, scrollLeft, clientWidth } = e.target;
     const isAtEnd = scrollLeft + clientWidth >= scrollWidth - 500;
 
@@ -29,10 +27,10 @@ const Home = () => {
     }
   };
 
-  const moviesList = (title: string, array: iMovie[]) => (
+  const moviesList = (title: string, array: iMovie[], isInfiniteScroll: boolean) => (
     <div className="pt-5">
       <p className="font-medium text-black text-xl">{title}</p>
-      <div className="overflow-auto no-scrollbar w-full mx-auto py-2" onScroll={handleScroll}>
+      <div className="overflow-auto no-scrollbar w-full mx-auto py-2" onScroll={(e) => handleScroll(e, isInfiniteScroll)}>
         <div className="flex">
           {array?.length > 0
             ? array.map((x: iMovie) =>
@@ -54,8 +52,9 @@ const Home = () => {
 
   const body = () => (
     <div>
-      {moviesList("Trending movies", trendingMovies)}
-      {moviesList("Watchlist Movies", watchlist)}
+      {moviesList("Trending movies", trendingMovies, true)}
+      {moviesList("Watchlist Movies", watchList, false)}
+      {moviesList("Favourite Movies", favoriteMovies, false)}
     </div>
   )
   return <Template body={body()} />
