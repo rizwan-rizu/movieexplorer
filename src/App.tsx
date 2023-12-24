@@ -4,6 +4,7 @@ import ProtectedRoute from "./protectedRoutes";
 import Login from "./Pages/login";
 import Registration from "./Pages/registration";
 import Home from "./Pages/home";
+import MovieDetail from "./Pages/movieDetail";
 
 const App = () => (
   <BrowserRouter>
@@ -11,6 +12,7 @@ const App = () => (
       <Route path="/" element={<ProtectedRoute role={[roles.ALL]} element={<Home />} />} />
       <Route path="/login" element={<ProtectedRoute role={[roles.ALL]} element={<Login />} />} />
       <Route path="/register" element={<ProtectedRoute role={[roles.ALL]} element={<Registration />} />} />
+      <Route path="/movie/:movieId" element={<ProtectedRoute role={[roles.ALL]} element={<MovieDetail />} />} />
       {/* <Route path="*" element={<NotFound />} /> */}
     </Routes>
   </BrowserRouter>

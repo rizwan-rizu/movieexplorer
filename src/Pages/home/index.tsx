@@ -1,31 +1,79 @@
+import { useEffect, useState } from "react";
+import { getTrendingMovies, getWatchlistMovies } from "./api";
+import { iMovie } from "./interface";
+import Template from "../template";
+import { useNavigate } from "react-router-dom";
+
 const Home = () => {
-  return (
-    <div className="bg-gray-100 h-full px-7 py-3">
-      <div className="flex flex-row align-center relative">
-        <div className="flex flex-col items-start">
-          <p className="font-semibold text-3xl text-black">The</p>
-          <p className="font-semibold text-3xl text-black">Movie</p>
-          <p className="font-semibold  text-3xl">Tracker</p>
-        </div>
-        <div className="absolute left-[50%] top-[22px] -translate-x-1/2 ">
-          <input className={`bg-gray-300 w-[630px] placeholder-black h-[57px] p-3 pl-4 text-lg text-center rounded-full`} type="text" name="userName" placeholder="Search a movie or series" />
+  const navigate = useNavigate()
+  const [trendingMovies, setTrendingMovies] = useState<iMovie[]>([])
+  const [watchlist, setWatchlist] = useState<iMovie[]>([])
+  const [trendingMoviesPage, setTrendingMoviesPage] = useState<number>(1);
+  const [isLoading, setIsLoading] = useState<boolean>(false)
+  // const [showError, setShowError] = useState<{ show: boolean, message: string }>({ show: false, message: '' })
+
+  useEffect(() => {
+    getTrendingMovies(trendingMoviesPage, setTrendingMovies, setIsLoading)
+  }, [trendingMoviesPage])
+
+  useEffect(() => {
+    getWatchlistMovies(1, setWatchlist)
+  }, [])
+
+  const handleScroll = (e: any) => {
+    const { scrollWidth, scrollLeft, clientWidth } = e.target;
+    const isAtEnd = scrollLeft + clientWidth >= scrollWidth - 500;
+
+    if (isAtEnd && !isLoading) {
+      setTrendingMoviesPage((prev: number) => (prev + 1))
+    }
+  };
+
+  const body = () => (
+    <div>
+      <div className="grid grid-cols-1 mt-5">
+        <p className="font-medium text-black text-xl">Trending movies</p>
+      </div>
+      <div className="overflow-auto no-scrollbar w-full mx-auto py-2" onScroll={handleScroll}>
+        <div className="flex">
+          {trendingMovies?.length > 0
+            ? trendingMovies.map((x: iMovie) =>
+              <div key={x.id} className="flex-shrink-0 p-2">
+                <img
+                  className="rounded-xl cursor-pointer transition duration-300 ease-in-out hover:scale-110"
+                  src={`https://image.tmdb.org/t/p/w185/${x.poster_path}`}
+                  alt="poster"
+                  onClick={() => navigate(`/movie/${x.id}`)}
+                />
+              </div>
+            )
+            : <p>Loading...</p>
+          }
         </div>
       </div>
-      <div className="grid grid-cols-2 mt-4">
-        <div>
-          <p className="font-medium text-black text-lg">Currently watching</p>
-        </div>
-        <div>
-          <p className="font-medium text-black text-lg">Suggested to watch</p>
-        </div>
+      <div className="grid grid-cols-1 mt-5">
+        <p className="font-medium text-black text-xl">Watchlist Movies</p>
       </div>
-      <div className="grid grid-cols-1 mt-4">
-        <div>
-          <p className="font-medium text-black text-lg">Previously watched</p>
+      <div className="overflow-auto no-scrollbar w-full mx-auto py-2" onScroll={handleScroll}>
+        <div className="flex">
+          {watchlist?.length > 0
+            ? watchlist.map((x: iMovie) =>
+              <div key={x.id} className="flex-shrink-0 p-2">
+                <img
+                  className="rounded-xl cursor-pointer transition duration-300 ease-in-out hover:scale-110"
+                  src={`https://image.tmdb.org/t/p/w185/${x.poster_path}`}
+                  alt="poster"
+                  onClick={() => navigate(`/movie/${x.id}`)}
+                />
+              </div>
+            )
+            : <p>Loading...</p>
+          }
         </div>
       </div>
     </div>
   )
+  return <Template body={body()} />
 }
 
 export default Home;

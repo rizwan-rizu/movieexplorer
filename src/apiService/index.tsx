@@ -7,7 +7,7 @@ const apiService = axios.create({
 });
 
 apiService.interceptors.request.use((config: any) => {
-  if (process.env.REACT_APP_BASE_URL) config.headers = { ...config.headers, Authorization: `Bearer ${process.env.REACT_APP_BASE_URL}` }
+  if (process.env.REACT_APP_BASE_URL) config.headers = { ...config.headers, Authorization: `Bearer ${process.env.REACT_APP_AUTH_TOKEN}` }
   return config;
 }, (err) => Promise.reject(err)
 );
