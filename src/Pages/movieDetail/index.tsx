@@ -44,15 +44,15 @@ const MovieDetail = () => {
     <div>
       {isLoading ? <LoadingSpinner /> : (
         <div>
-          <div className="flex content-between">
+          <div className="flex md:flex-nowrap flex-wrap content-between">
             <img
-              className="rounded-xl"
+              className="rounded-xl h-72 md:h-full"
               src={`https://image.tmdb.org/t/p/w342/${movie?.poster_path}`}
               alt="poster"
             />
-            <div className="pl-5 py-12">
-              <p className="font-bold text-black text-3xl">{movie?.title}</p>
-              <div className="flex items-center">
+            <div className="pl-0 md:pl-5 py-6 md:py-12">
+              <p className="font-bold text-black text-lg md:text-3xl">{movie?.title}</p>
+              <div className="flex flex-wrap items-center">
                 <p className="text-sm">{moment(movie?.release_date).format('DD/MM/YYYY')}</p>
                 <FontAwesomeIcon className="mx-2 text-[10px]" icon={faCircle} />
                 <p className="text-sm">{movie?.genres?.map((x: { id: string, name: string }) => x.name).join(', ')}</p>
@@ -109,7 +109,6 @@ const MovieDetail = () => {
                   </div>
                 </div>
               </div>
-
             )) : <LoadingSpinner />}
           </div>
         </div>
