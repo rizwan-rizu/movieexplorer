@@ -1,4 +1,3 @@
-import { HTMLProps } from "react"
 import Header from "./header"
 import Footer from "./footer"
 
@@ -8,9 +7,9 @@ interface iTemplateProps {
 
 const Template = (props: iTemplateProps) => {
   return (
-    <div className="bg-gray-100 relative">
+    <div className="bg-gray-100 dark:bg-slate-800 relative">
       <Header />
-      <div className="px-7 pb-3">
+      <div className="px-3 md:px-7 pb-3">
         {props.body}
       </div>
       <Footer />
