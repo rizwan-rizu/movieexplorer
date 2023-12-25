@@ -6,7 +6,7 @@ import { faCircle, faBookmark, faHeart } from '@fortawesome/free-regular-svg-ico
 import Template from "../template";
 import moment from "moment";
 import LoadingSpinner from "../../common/loadingSpinner";
-import Alert from "../../common/alert";
+import Snackbar from "../../common/snackbar";
 import Table from "../../common/table";
 import { castColumn } from "./tableColumn";
 import { StoreContext } from "../../store";
@@ -30,12 +30,14 @@ const MovieDetail = () => {
     let data = [...watchList, movie]
     setWatchlist(data)
     setStorageItem("watchList", JSON.stringify(data))
+    setShowAlert({ show: true, message: "Movie has been added to watchlist." })
   }
 
   const handleMarkAsFavourite = () => {
     let data = [...favoriteMovies, movie]
     setFavoriteMovies(data)
     setStorageItem("favoriteMovies", JSON.stringify(data))
+    setShowAlert({ show: true, message: "Movie has been added to favourites." })
   }
 
   const body = () => (
@@ -82,7 +84,6 @@ const MovieDetail = () => {
                   Mark as Favourite
                 </button>
               </div>
-              {showAlert.show && <Alert color="green" message={showAlert.message} />}
             </div>
           </div>
           {/* Cast */}
@@ -113,6 +114,7 @@ const MovieDetail = () => {
           </div>
         </div>
       )}
+      {showAlert.show && <Snackbar onClose={setShowAlert} message={showAlert.message} />}
     </div>
   )
   return <Template body={body()} />

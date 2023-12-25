@@ -21,7 +21,7 @@ const Home = () => {
   const handleLoadMore = (e: any, isInfiniteScroll: boolean) => {
     if (!isInfiniteScroll) return
     const { scrollWidth, scrollLeft, clientWidth } = e.target;
-    const isAtEnd = scrollLeft + clientWidth >= scrollWidth - 300;
+    const isAtEnd = scrollLeft + clientWidth >= scrollWidth - 500;
 
     if (isAtEnd && !isLoading) {
       setTrendingMoviesPage((prev: number) => (prev + 1))
