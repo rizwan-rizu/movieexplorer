@@ -23,6 +23,9 @@ module.exports = {
         'gray-light': '#d3dce6'
       },
       extend: {
+        backgroundColor: {
+          'black-50': 'rgba(0, 0, 0, 0.5)',
+        },
         spacing: {
           '128': '32rem',
           '144': '36rem',
