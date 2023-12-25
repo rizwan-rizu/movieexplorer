@@ -95,7 +95,7 @@ const MovieDetail = () => {
           <div className="py-6">
             <p className="font-bold text-black text-2xl">Reviews</p>
             {reviews.length > 0 && !isReviewLoading ? reviews.map((x: any) => (
-              <div className="flex flex-col gap-3 pt-7">
+              <div key={x.id} className="flex flex-col gap-3 pt-7">
                 <div className="flex flex-col gap-4 bg-gray-200 rounded-lg p-4">
                   <div className="flex justify justify-between">
                     <div className="flex gap-2">
