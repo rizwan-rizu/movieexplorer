@@ -1,9 +1,8 @@
 import { useEffect, useState } from "react"
 import { apiService } from "../apiService"
 import { iMovie } from "../Pages/home/interface"
-import axios from "axios"
 
-export const useMovieSearch = (keyword: string, page: number) => {
+export const useMovieSearch = (endPoint: string, page: number, keyword: string) => {
   const [search, setSearch] = useState<iMovie[]>([])
   const [loading, setLoading] = useState<boolean>(false)
   const [error, setError] = useState<boolean>(false)
@@ -12,15 +11,14 @@ export const useMovieSearch = (keyword: string, page: number) => {
   useEffect(() => { setSearch([]) }, [keyword])
 
   useEffect(() => {
-    if (keyword) {
+    if (keyword !== '') {
       setLoading(true)
       setError(false)
-
-      apiService({
-        method: "GET",
-        url: `/search/multi`,
-        params: { query: keyword, page },
-      })
+      const params: { [key: string]: string | number } = { page }
+      if (keyword !== undefined) {
+        params.query = keyword
+      }
+      apiService({ method: "GET", url: endPoint, params })
         .then(res => {
           if (res.status === 200) {
             setSearch((prev: iMovie[]) => ([...prev, ...res.data.results]));

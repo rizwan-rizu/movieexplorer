@@ -3,8 +3,8 @@ import { getTrendingMovies } from "./api";
 import { iMovie } from "./interface";
 import { useNavigate } from "react-router-dom";
 import { StoreContext } from "../../store";
-import Template from "../template";
 import { debounce } from "../../utility";
+import Template from "../template";
 
 const Home = () => {
   const navigate = useNavigate()

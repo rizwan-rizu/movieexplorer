@@ -11,7 +11,7 @@ import LoadingSpinner from '../../common/loadingSpinner';
 const SearchMovies = () => {
   const [keyword, setKeyword] = useState<string>('')
   const [page, setPage] = useState<number>(1)
-  const { search, loading, error, hasMore } = useMovieSearch(keyword, page);
+  const { search, loading, error, hasMore } = useMovieSearch(`/search/multi`, page, keyword);
   const navigate = useNavigate()
   const observer: any = useRef()
 
@@ -72,6 +72,8 @@ const SearchMovies = () => {
                     />
                   </div>
                 )
+              } else {
+                return null
               }
             }
             )}
