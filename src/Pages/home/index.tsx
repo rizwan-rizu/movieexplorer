@@ -60,7 +60,7 @@ const Home = () => {
     elementRef?: any
   ) => (
     <div className="pt-5">
-      <p className="font-medium text-black text-xl">{title}</p>
+      <p className="font-medium text-black dark:text-gray-200 text-xl">{title}</p>
       <div className="overflow-auto no-scrollbar w-full mx-auto py-2">
         <div className="flex">
           {array.map((x: iMovie, idx: number) => (

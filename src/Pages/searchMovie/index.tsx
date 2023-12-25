@@ -35,14 +35,14 @@ const SearchMovies = () => {
   const debounceOnChange = useCallback(debounce(handleKeywordChange, 1000), []);
 
   return (
-    <div className="px-3 md:px-7 py-3 bg-gray-100 h-full overflow-auto">
+    <div className="px-3 md:px-7 py-3 bg-gray-100 dark:bg-slate-800 h-full overflow-auto">
       <div className="flex flex-wrap items-center">
         <div className="grow md:flex-none">
           {logoText(navigate)}
         </div>
         <div className="text-center flex-none md:grow">
           <input
-            className={`bg-gray-200 w-full md:w-[60%] placeholder-black p-3 pl-4 text-lg text-center rounded-full`}
+            className={`bg-gray-200 dark:bg-gray-600 w-full md:w-[60%] placeholder-black dark:placeholder-white p-3 pl-4 text-lg text-center rounded-full`}
             type="text"
             name="keyword"
             placeholder="Search a movie or series"
@@ -50,8 +50,8 @@ const SearchMovies = () => {
           />
         </div>
         <div className="flex-none hidden md:block">
-          <button onClick={() => navigate(-1)} className="hover:bg-gray-200 text-black border rounded-full py-2 px-4">
-            <FontAwesomeIcon className="mr-2 text-black" icon={faArrowLeft} />
+          <button onClick={() => navigate(-1)} className="bg-gray-200 dark:bg-gray-600 py-2 px-5 hover:bg-gray-300 dark:hover:bg-gray-500 text-black dark:text-gray-200 font-normal rounded-full">
+            <FontAwesomeIcon className="mr-2 text-black dark:text-gray-200" icon={faArrowLeft} />
             Go Back
           </button>
         </div>
@@ -59,19 +59,19 @@ const SearchMovies = () => {
       <div className="pt-5">
         <div className='flex justify-between flex-wrap'>
           <div>
-            <span className="font-medium text-black text-md md:text-xl">Showing searched results for:</span>
-            <span className="font-bold text-black ml-3 text-md md:text-xl">{keyword}</span>
+            <span className="font-medium text-black dark:text-gray-200 text-md md:text-xl">Showing searched results for:</span>
+            <span className="font-bold text-black dark:text-gray-200 ml-3 text-md md:text-xl">{keyword}</span>
           </div>
           <div>
-            <span className="font-medium text-black text-md md:text-lg">Filter by: </span>
+            <span className="font-medium text-black dark:text-gray-200 text-md md:text-lg">Filter by: </span>
             <button
-              className={`bg-${filterBy === 'movie' ? 'black' : 'gray-200'} py-1 px-5 mr-1 text-${filterBy === 'movie' ? 'white' : 'black'} font-normal rounded-full`}
+              className={`bg-${filterBy === 'movie' ? 'black' : 'gray-200'} dark:bg-${filterBy === 'movie' ? 'black' : 'gray-600'} py-1 px-5 mr-1 text-${filterBy === 'movie' ? 'white' : 'black'} dark:text-gray-200 font-normal rounded-full`}
               onClick={() => setFilterBy(prev => (prev === "movie" ? '' : "movie"))}
             >
               Movie
             </button>
             <button
-              className={`bg-${filterBy === 'tv' ? 'black' : 'gray-200'} py-1 px-5 mr-1 text-${filterBy === 'tv' ? 'white' : 'black'} font-normal rounded-full`}
+              className={`bg-${filterBy === 'tv' ? 'black' : 'gray-200'} dark:bg-${filterBy === 'tv' ? 'black' : 'gray-600'} py-1 px-5 mr-1 text-${filterBy === 'tv' ? 'white' : 'black'} dark:text-gray-200 font-normal rounded-full`}
               onClick={() => setFilterBy(prev => (prev === "tv" ? '' : "tv"))}
             >
               TV
@@ -92,8 +92,8 @@ const SearchMovies = () => {
             ))}
           </div>
           {loading && <LoadingSpinner />}
-          {(!loading && !error && search.length === 0 && keyword) && <p>No result found</p>}
-          {error && <p>An Error has occured. We have failed to fetch search results. Please try again by refreshing you page.</p>}
+          {(!loading && !error && search.length === 0 && keyword) && <p className='dark:text-gray-200 text-black'>No result found</p>}
+          {error && <p className='dark:text-gray-200 text-black'>An Error has occured. We have failed to fetch search results. Please try again by refreshing you page.</p>}
         </div>
       </div>
     </div >
