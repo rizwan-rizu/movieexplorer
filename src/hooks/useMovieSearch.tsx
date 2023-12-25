@@ -2,7 +2,7 @@ import { useEffect, useState } from "react"
 import { apiService } from "../apiService"
 import { iMovie } from "../Pages/home/interface"
 
-export const useMovieSearch = (endPoint: string, page: number, keyword: string) => {
+export const useMovieSearch = (endPoint: string, page: number, keyword: string | undefined) => {
   const [search, setSearch] = useState<iMovie[]>([])
   const [loading, setLoading] = useState<boolean>(false)
   const [error, setError] = useState<boolean>(false)
