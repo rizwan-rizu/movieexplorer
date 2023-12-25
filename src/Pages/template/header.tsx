@@ -4,9 +4,9 @@ import { useNavigate } from 'react-router-dom';
 
 export const logoText = (navigate: Function) => (
   <div className="flex flex-col items-start cursor-pointer" onClick={() => navigate('/')}>
-    <p className="font-semibold text-3xl text-black ">The</p>
-    <p className="font-semibold text-3xl text-black">Movie</p>
-    <p className="font-semibold text-3xl">Tracker</p>
+    <p className="font-semibold sm:text-xl md:text-3xl  text-black ">The</p>
+    <p className="font-semibold sm:text-xl md:text-3xl text-black">Movie</p>
+    <p className="font-semibold sm:text-xl md:text-3xl text-black">Tracker</p>
   </div>
 )
 

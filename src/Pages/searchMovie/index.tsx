@@ -35,21 +35,21 @@ const SearchMovies = () => {
   const debounceOnChange = useCallback(debounce(handleKeywordChange, 1000), []);
 
   return (
-    <div className="px-7 py-3 bg-gray-100 h-full overflow-auto">
-      <div className="flex items-center">
-        <div className="flex-none">
+    <div className="px-3 md:px-7 py-3 bg-gray-100 h-full overflow-auto">
+      <div className="flex flex-wrap items-center">
+        <div className="grow md:flex-none">
           {logoText(navigate)}
         </div>
-        <div className="text-center grow">
+        <div className="text-center flex-none md:grow">
           <input
-            className={`bg-gray-200 w-[60%] placeholder-black h-[57px] p-3 pl-4 text-lg text-center rounded-full`}
+            className={`bg-gray-200 w-full md:w-[60%] placeholder-black p-3 pl-4 text-lg text-center rounded-full`}
             type="text"
             name="keyword"
             placeholder="Search a movie or series"
             onChange={(e) => debounceOnChange(e.target.value)}
           />
         </div>
-        <div className="flex-none">
+        <div className="flex-none hidden md:block">
           <button onClick={() => navigate(-1)} className="hover:bg-gray-200 text-black border rounded-full py-2 px-4">
             <FontAwesomeIcon className="mr-2 text-black" icon={faArrowLeft} />
             Go Back
@@ -57,13 +57,13 @@ const SearchMovies = () => {
         </div>
       </div>
       <div className="pt-5">
-        <div className='flex justify-between'>
+        <div className='flex justify-between flex-wrap'>
           <div>
-            <span className="font-medium text-black text-xl">Showing searched results for:</span>
-            <span className="font-bold text-black ml-3 text-xl">{keyword}</span>
+            <span className="font-medium text-black text-md md:text-xl">Showing searched results for:</span>
+            <span className="font-bold text-black ml-3 text-md md:text-xl">{keyword}</span>
           </div>
           <div>
-            <span className="font-medium text-black ml-3 text-lg">Filter by: </span>
+            <span className="font-medium text-black text-md md:text-lg">Filter by: </span>
             <button
               className={`bg-${filterBy === 'movie' ? 'black' : 'gray-200'} py-1 px-5 mr-1 text-${filterBy === 'movie' ? 'white' : 'black'} font-normal rounded-full`}
               onClick={() => setFilterBy(prev => (prev === "movie" ? '' : "movie"))}
@@ -81,7 +81,7 @@ const SearchMovies = () => {
         <div className="w-full py-2">
           <div className="flex flex-wrap">
             {search.filter(x => filterBy ? x.media_type === filterBy : x).map((x: iMovie, idx: number) => (
-              <div key={x.id} ref={(search.filter(x => filterBy ? x.media_type === filterBy : x).length === idx + 1) ? lastElement : null} className="flex-shrink-0 p-2">
+              <div key={x.id} ref={(search.filter(x => filterBy ? x.media_type === filterBy : x).length === idx + 1) ? lastElement : null} className="flex-shrink-0 p-1">
                 <img
                   className="rounded-xl cursor-pointer transition duration-300 ease-in-out hover:scale-110"
                   src={`https://image.tmdb.org/t/p/w185/${x.poster_path}`}
