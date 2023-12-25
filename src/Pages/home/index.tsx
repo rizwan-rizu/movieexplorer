@@ -1,9 +1,10 @@
-import { useContext, useEffect, useState } from "react";
+import { useCallback, useContext, useEffect, useState } from "react";
 import { getTrendingMovies } from "./api";
 import { iMovie } from "./interface";
 import { useNavigate } from "react-router-dom";
 import { StoreContext } from "../../store";
 import Template from "../template";
+import { debounce } from "../../utility";
 
 const Home = () => {
   const navigate = useNavigate()
@@ -17,20 +18,22 @@ const Home = () => {
     getTrendingMovies(trendingMoviesPage, setTrendingMovies, setIsLoading)
   }, [trendingMoviesPage])
 
-  const handleScroll = (e: any, isInfiniteScroll: boolean) => {
+  const handleLoadMore = (e: any, isInfiniteScroll: boolean) => {
     if (!isInfiniteScroll) return
     const { scrollWidth, scrollLeft, clientWidth } = e.target;
-    const isAtEnd = scrollLeft + clientWidth >= scrollWidth - 500;
+    const isAtEnd = scrollLeft + clientWidth >= scrollWidth - 300;
 
     if (isAtEnd && !isLoading) {
       setTrendingMoviesPage((prev: number) => (prev + 1))
     }
   };
 
+  const debounceOnScroll = useCallback(debounce(handleLoadMore, 400), []);
+
   const moviesList = (title: string, array: iMovie[], isInfiniteScroll: boolean) => (
     <div className="pt-5">
       <p className="font-medium text-black text-xl">{title}</p>
-      <div className="overflow-auto no-scrollbar w-full mx-auto py-2" onScroll={(e) => handleScroll(e, isInfiniteScroll)}>
+      <div className="overflow-auto no-scrollbar w-full mx-auto py-2" onScroll={(e) => debounceOnScroll(e, isInfiniteScroll)}>
         <div className="flex">
           {array?.length > 0
             ? array.map((x: iMovie) =>

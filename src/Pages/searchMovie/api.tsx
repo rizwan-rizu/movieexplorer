@@ -2,15 +2,17 @@ import { apiService } from "../../apiService";
 import { iMovie } from "../home/interface";
 
 export const getSearchMovies = async (
+  page: number,
   keyword: string,
-  setSearch: React.Dispatch<React.SetStateAction<iMovie[]>>,
+  setSearch: React.Dispatch<React.SetStateAction<iMovie[] | null>>,
   setLoading: React.Dispatch<React.SetStateAction<boolean>>,
-  setShowAlert?: React.Dispatch<React.SetStateAction<{ show: boolean, message: string }>>
+  setShowAlert?: React.Dispatch<React.SetStateAction<{ show: boolean, message: string }>>,
 ) => {
   try {
-    const res = await apiService.get(`/search/multi?query=${keyword}`)
+    setLoading(true)
+    const res = await apiService.get(`/search/multi?query=${keyword}&page=${page}`)
     if (res.status === 200) {
-      setSearch(res.data.results);
+      setSearch((prev: iMovie[] | null) => (prev !== null ? [...prev, ...res.data.results] : res.data.results));
     }
     else setShowAlert && setShowAlert({ show: true, message: "Failed to fetch trending movies" })
   } catch (error) {

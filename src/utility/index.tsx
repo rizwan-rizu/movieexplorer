@@ -7,3 +7,15 @@ export enum roles {
 }
 
 export const capitalizeFirstLetter = (text: string) => text.toLowerCase().charAt(0).toUpperCase() + text.toLowerCase().slice(1);
+
+export const debounce = (func: Function, wait: number): Function => {
+    let timeout: number | any;
+    return (...args: any) => {
+        const context = this;
+        if (timeout) clearTimeout(timeout);
+        timeout = setTimeout(() => {
+            timeout = null;
+            func.apply(context, args);
+        }, wait);
+    };
+}
