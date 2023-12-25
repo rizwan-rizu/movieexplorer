@@ -22,8 +22,8 @@ const MovieDetail = () => {
   const [showAlert, setShowAlert] = useState<{ show: boolean, message: string }>({ show: false, message: '' })
 
   useEffect(() => {
-    getMovieDetail(movieId, setMovie, setIsLoading)
-    getMovieReviews(movieId, setReviews, setIsReviewLoading)
+    getMovieDetail(movieId, setMovie, setIsLoading, setShowAlert)
+    getMovieReviews(movieId, setReviews, setIsReviewLoading, setShowAlert)
   }, [movieId])
 
   const handleAddToWatchlist = () => {
@@ -42,7 +42,7 @@ const MovieDetail = () => {
 
   const body = () => (
     <div>
-      {isLoading ? <LoadingSpinner /> : (
+      {Object.keys(movie).length > 0 && (
         <div>
           <div className="flex md:flex-nowrap flex-wrap content-between">
             <img
@@ -113,7 +113,8 @@ const MovieDetail = () => {
           </div>
         </div>
       )}
-      {showAlert.show && <Snackbar onClose={setShowAlert} message={showAlert.message} />}
+      {isLoading && <LoadingSpinner />}
+      {showAlert.show && <Snackbar onClose={(value) => setShowAlert({ show: value as boolean, message: '' })} message={showAlert.message} />}
     </div>
   )
   return <Template body={body()} />

@@ -35,7 +35,7 @@ export const useMovieSearch = (endPoint: string, page: number, keyword: string |
           setLoading(false)
         })
     }
-  }, [keyword, page])
+  }, [keyword, page, endPoint])
 
-  return { search, loading, error, hasMore }
+  return { search, loading, error, setError, hasMore }
 }

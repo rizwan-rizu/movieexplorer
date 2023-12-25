@@ -5,6 +5,7 @@ import { StoreContext } from "../../store";
 import { useMovieSearch } from "../../hooks/useMovieSearch";
 import LoadingSpinner from "../../common/loadingSpinner";
 import Template from "../template";
+import Snackbar from "../../common/snackbar";
 
 const Home = () => {
   const navigate = useNavigate()
@@ -15,12 +16,14 @@ const Home = () => {
     search: trendingMovie,
     loading: trendingMoviesLoading,
     error: trendingMoivesError,
+    setError: trendingMoivesSetError,
     hasMore: hasMoreTrendingMovies
   } = useMovieSearch('/trending/movie/week', trendingMoviesPage, undefined);
   const {
     search: nowPlayingMovies,
     loading: nowPlayingMoviesLoading,
     error: nowPlayingMoviesError,
+    setError: nowPlayingMoviesSetError,
     hasMore: hasMoreNowPlayingMovies
   } = useMovieSearch('/movie/now_playing', nowPlayingMoviePage, undefined);
   const observerTrending: any = useRef()
@@ -48,7 +51,14 @@ const Home = () => {
     if (node) observerNowPlaying.current.observe(node)
   }, [nowPlayingMoviesLoading, hasMoreNowPlayingMovies])
 
-  const moviesList = (title: string, array: iMovie[], loading: boolean, error: boolean, elementRef?: any) => (
+  const moviesList = (
+    title: string,
+    array: iMovie[],
+    loading: boolean,
+    error: boolean,
+    setError?: React.Dispatch<React.SetStateAction<boolean>> | undefined,
+    elementRef?: any
+  ) => (
     <div className="pt-5">
       <p className="font-medium text-black text-xl">{title}</p>
       <div className="overflow-auto no-scrollbar w-full mx-auto py-2">
@@ -64,6 +74,7 @@ const Home = () => {
             </div>
           ))}
           {loading && !error && <LoadingSpinner />}
+          {!loading && error && <Snackbar onClose={setError} message={"An error has occured. We are unable to show data currently. Please try again by refresh your page."} />}
         </div>
       </div>
     </div>
@@ -71,8 +82,8 @@ const Home = () => {
 
   const body = () => (
     <div>
-      {moviesList("Trending Movies", trendingMovie, trendingMoviesLoading, trendingMoivesError, trendingMovieLastElement)}
-      {moviesList("Now Playing", nowPlayingMovies, nowPlayingMoviesLoading, nowPlayingMoviesError, nowPlayingLastElement)}
+      {moviesList("Trending Movies", trendingMovie, trendingMoviesLoading, trendingMoivesError, trendingMoivesSetError, trendingMovieLastElement)}
+      {moviesList("Now Playing", nowPlayingMovies, nowPlayingMoviesLoading, nowPlayingMoviesError, nowPlayingMoviesSetError, nowPlayingLastElement)}
       {moviesList("Watchlist Movies", watchList, false, false)}
       {moviesList("Favourite Movies", favoriteMovies, false, false)}
     </div>
