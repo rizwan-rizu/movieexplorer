@@ -21,7 +21,11 @@ export const useMovieSearch = (endPoint: string, page: number, keyword: string |
       apiService({ method: "GET", url: endPoint, params })
         .then(res => {
           if (res.status === 200) {
-            setSearch((prev: iMovie[]) => ([...prev, ...res.data.results]));
+            if (endPoint === `/search/multi`) {
+              setSearch((prev: iMovie[]) => ([...prev, ...res.data.results.filter((x: iMovie) => ['tv', 'movie'].includes(x.media_type) && x.poster_path !== null)]));
+            } else {
+              setSearch((prev: iMovie[]) => ([...prev, ...res.data.results]));
+            }
             setLoading(false)
             setHasMore(res.data.results.length > 0)
           }

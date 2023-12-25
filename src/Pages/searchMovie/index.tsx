@@ -11,6 +11,7 @@ import LoadingSpinner from '../../common/loadingSpinner';
 const SearchMovies = () => {
   const [keyword, setKeyword] = useState<string>('')
   const [page, setPage] = useState<number>(1)
+  const [filterBy, setFilterBy] = useState<string>('')
   const { search, loading, error, hasMore } = useMovieSearch(`/search/multi`, page, keyword);
   const navigate = useNavigate()
   const observer: any = useRef()
@@ -56,34 +57,46 @@ const SearchMovies = () => {
         </div>
       </div>
       <div className="pt-5">
-        <span className="font-medium text-black text-xl">Showing searched results for:</span>
-        <span className="font-bold text-black ml-3 text-xl">{keyword}</span>
+        <div className='flex justify-between'>
+          <div>
+            <span className="font-medium text-black text-xl">Showing searched results for:</span>
+            <span className="font-bold text-black ml-3 text-xl">{keyword}</span>
+          </div>
+          <div>
+            <span className="font-medium text-black ml-3 text-lg">Filter by: </span>
+            <button
+              className={`bg-${filterBy === 'movie' ? 'black' : 'gray-200'} py-1 px-5 mr-1 text-${filterBy === 'movie' ? 'white' : 'black'} font-normal rounded-full`}
+              onClick={() => setFilterBy(prev => (prev === "movie" ? '' : "movie"))}
+            >
+              Movie
+            </button>
+            <button
+              className={`bg-${filterBy === 'tv' ? 'black' : 'gray-200'} py-1 px-5 mr-1 text-${filterBy === 'tv' ? 'white' : 'black'} font-normal rounded-full`}
+              onClick={() => setFilterBy(prev => (prev === "tv" ? '' : "tv"))}
+            >
+              TV
+            </button>
+          </div>
+        </div>
         <div className="w-full py-2">
           <div className="flex flex-wrap">
-            {search.map((x: iMovie, idx: number) => {
-              if (['tv', 'movie'].includes(x.media_type) && x.poster_path !== null) {
-                return (
-                  <div key={x.id} ref={(search.length === idx + 1) ? lastElement : null} className="flex-shrink-0 p-2">
-                    <img
-                      className="rounded-xl cursor-pointer transition duration-300 ease-in-out hover:scale-110"
-                      src={`https://image.tmdb.org/t/p/w185/${x.poster_path}`}
-                      alt="poster"
-                      onClick={() => navigate(`/movie/${x.id}`)}
-                    />
-                  </div>
-                )
-              } else {
-                return null
-              }
-            }
-            )}
+            {search.filter(x => filterBy ? x.media_type === filterBy : x).map((x: iMovie, idx: number) => (
+              <div key={x.id} ref={(search.filter(x => filterBy ? x.media_type === filterBy : x).length === idx + 1) ? lastElement : null} className="flex-shrink-0 p-2">
+                <img
+                  className="rounded-xl cursor-pointer transition duration-300 ease-in-out hover:scale-110"
+                  src={`https://image.tmdb.org/t/p/w185/${x.poster_path}`}
+                  alt="poster"
+                  onClick={() => navigate(`/movie/${x.id}`)}
+                />
+              </div>
+            ))}
           </div>
           {loading && <LoadingSpinner />}
           {(!loading && !error && search.length === 0 && keyword) && <p>No result found</p>}
           {error && <p>An Error has occured. We have failed to fetch search results. Please try again by refreshing you page.</p>}
         </div>
       </div>
-    </div>
+    </div >
   );
 };
 
