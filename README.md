@@ -2,7 +2,7 @@
 This document provides guidelines on how to set it up locally and use it.
 
 This project was created with React, Typescript, Tailwind CSS and has been deployed to vercel.
-For live demo, click [https://spacexlaunches-demo.vercel.app/](https://movieexplorer.vercel.app/) to view it in the browser.
+For live demo,  [click](https://movieexplorer.vercel.app/) to view it in the browser.
 
 ## Getting Started
 ### Prerequisites
