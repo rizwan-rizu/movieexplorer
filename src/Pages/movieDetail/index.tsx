@@ -10,7 +10,8 @@ import Snackbar from "../../common/snackbar";
 import Table from "../../common/table";
 import { castColumn } from "./tableColumn";
 import { StoreContext } from "../../store";
-import { setStorageItem } from "../../utility";
+import { getStorageItem, setStorageItem } from "../../utility";
+import { iMovie } from "../home/interface";
 
 const MovieDetail = () => {
   const { movieId } = useParams()
@@ -27,6 +28,10 @@ const MovieDetail = () => {
   }, [movieId])
 
   const handleAddToWatchlist = () => {
+    if (watchList && watchList.length && watchList.filter((x: iMovie) => x.id === movie.id).length) {
+      setShowAlert({ show: true, message: "Movie has already been added to the watchlist" })
+      return
+    }
     let data = [...watchList, movie]
     setWatchlist(data)
     setStorageItem("watchList", JSON.stringify(data))
@@ -34,6 +39,10 @@ const MovieDetail = () => {
   }
 
   const handleMarkAsFavourite = () => {
+    if (favoriteMovies && favoriteMovies.length && favoriteMovies.filter((x: iMovie) => x.id === movie.id).length) {
+      setShowAlert({ show: true, message: "Movie has already been added to the favourites." })
+      return
+    }
     let data = [...favoriteMovies, movie]
     setFavoriteMovies(data)
     setStorageItem("favoriteMovies", JSON.stringify(data))
@@ -75,7 +84,7 @@ const MovieDetail = () => {
                 <span >{movie?.runtime}</span>
               </div>
               <div className="pt-4 pb-2">
-                <button className="bg-gray-200 py-2 px-5 hover:bg-gray-300 text-black font-normal rounded-full" onClick={handleAddToWatchlist}>
+                <button className="bg-gray-200 py-2 px-5 hover:bg-gray-300 text-black font-normal rounded-full" onClick={handleAddToWatchlist}                >
                   <FontAwesomeIcon className="mr-2" icon={faBookmark} />
                   Add to Watchlist
                 </button>
