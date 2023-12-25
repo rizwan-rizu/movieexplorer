@@ -1,46 +1,37 @@
-# Getting Started with Create React App
+# Getting Started with Movie Explorer App
+This document provides guidelines on how to set it up locally and use it.
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+This project was created with React, Typescript, Tailwind CSS and has been deployed to vercel.
+For live demo, click [https://spacexlaunches-demo.vercel.app/](https://movieexplorer.vercel.app/) to view it in the browser.
 
-## Available Scripts
+## Getting Started
+### Prerequisites
+Before you begin, ensure you have the following installed:
 
-In the project directory, you can run:
+Node.js &
+npm (Node Package Manager)
 
-### `npm start`
+## Installation
+- Clone the repository: `git clone https://github.com/rizwan-rizu/movieexplorer.git`
+- Navigate to the project folder: `cd movieexplorer`
+- Install dependencies: `npm install`
+- Run the the appliation locally: `npm start`
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+## Technology Used
+- Typescript
+- React
+- Tailwind Css
+- React-router-dom
+- moment (open source date library)
+- axios
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
-
-### `npm test`
-
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `npm run build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+## Some implementation being implemented
+-  Implemented re-usable API Service using Axios with Request Interceptor to append authorization header for the Bearer token and Response Interceptor to watch for the API response; if it fails with 401, then 
+ retry the previous API call by getting the refreshed token. Currently response interceptor code is not implemented as there's no refresh token functionality.
+- By using React Router i have created Protected Routes so that only authorized users can access the route/page based on the user roles. Currently I have commented out some logic in the protected route because of no roles and permissions.
+- Implemented state management using the context api without any external library installation.
+- For the purpose of code reusability, common components were created to be called whenever necessary.
+- Implemented resoponsiveness so that the site appears well on smaller screens
+- Implemented dark mode
+- Implemented debounce search
+- Implemented infinite scroll
