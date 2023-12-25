@@ -6,6 +6,7 @@ import { useNavigate } from 'react-router-dom';
 import { debounce } from '../../utility';
 import { logoText } from '../template/header';
 import { useMovieSearch } from '../../hooks/useMovieSearch';
+import LoadingSpinner from '../../common/loadingSpinner';
 
 const SearchMovies = () => {
   const [keyword, setKeyword] = useState<string>('')
@@ -30,7 +31,7 @@ const SearchMovies = () => {
     setPage(1)
   }
 
-  const debounceOnChange = useCallback(debounce(handleKeywordChange, 400), []);
+  const debounceOnChange = useCallback(debounce(handleKeywordChange, 1000), []);
 
   return (
     <div className="px-7 py-3 bg-gray-100 h-full overflow-auto">
@@ -40,7 +41,7 @@ const SearchMovies = () => {
         </div>
         <div className="text-center grow">
           <input
-            className={`bg-gray-200 w-[630px] placeholder-black h-[57px] p-3 pl-4 text-lg text-center rounded-full`}
+            className={`bg-gray-200 w-[60%] placeholder-black h-[57px] p-3 pl-4 text-lg text-center rounded-full`}
             type="text"
             name="keyword"
             placeholder="Search a movie or series"
@@ -55,9 +56,10 @@ const SearchMovies = () => {
         </div>
       </div>
       <div className="pt-5">
-        <p className="font-medium text-black text-xl">{`Searched Results`}</p>
+        <span className="font-medium text-black text-xl">Showing searched results for:</span>
+        <span className="font-bold text-black ml-3 text-xl">{keyword}</span>
         <div className="w-full py-2">
-          <div className="flex justify-center flex-wrap">
+          <div className="flex flex-wrap">
             {search.map((x: iMovie, idx: number) => {
               if (['tv', 'movie'].includes(x.media_type) && x.poster_path !== null) {
                 return (
@@ -74,8 +76,9 @@ const SearchMovies = () => {
             }
             )}
           </div>
-          {loading && <p>Loading...</p>}
-          {/* {error && <p>Loading...</p>} */}
+          {loading && <LoadingSpinner />}
+          {(!loading && !error && search.length === 0 && keyword) && <p>No result found</p>}
+          {error && <p>An Error has occured. We have failed to fetch search results. Please try again by refreshing you page.</p>}
         </div>
       </div>
     </div>

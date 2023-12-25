@@ -12,30 +12,27 @@ export const useMovieSearch = (keyword: string, page: number) => {
   useEffect(() => { setSearch([]) }, [keyword])
 
   useEffect(() => {
-    let cancel: any
-    setLoading(true)
-    setError(false)
+    if (keyword) {
+      setLoading(true)
+      setError(false)
 
-    apiService({
-      method: "GET",
-      url: `/search/multi`,
-      params: { query: keyword, page },
-      cancelToken: new axios.CancelToken(c => cancel = c)
-    })
-      .then(res => {
-        if (res.status === 200) {
-          setSearch((prev: iMovie[]) => ([...prev, ...res.data.results]));
-          setLoading(false)
-          setHasMore(res.data.results.length > 0)
-        }
-      }).catch(err => {
-        if (axios.isCancel(err)) return null
-        setError(true)
-      }).finally(() => {
-        setLoading(false)
+      apiService({
+        method: "GET",
+        url: `/search/multi`,
+        params: { query: keyword, page },
       })
-
-    return () => { cancel() }
+        .then(res => {
+          if (res.status === 200) {
+            setSearch((prev: iMovie[]) => ([...prev, ...res.data.results]));
+            setLoading(false)
+            setHasMore(res.data.results.length > 0)
+          }
+        }).catch(err => {
+          setError(true)
+        }).finally(() => {
+          setLoading(false)
+        })
+    }
   }, [keyword, page])
 
   return { search, loading, error, hasMore }
