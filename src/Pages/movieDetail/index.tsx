@@ -118,7 +118,7 @@ const MovieDetail = () => {
                   </div>
                 </div>
               </div>
-            )) : <LoadingSpinner />}
+            )) : isReviewLoading ? <LoadingSpinner /> : <p className=" text-black dark:text-gray-200 ml-2">No reviews found</p>}
           </div>
         </div>
       )}
