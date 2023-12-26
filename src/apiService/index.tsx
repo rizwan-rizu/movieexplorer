@@ -16,7 +16,11 @@ apiService.interceptors.response.use(
   (res) => { return res },
   async (err) => {
     try {
-      // Here we can implement functionality to watch for api response and if fail with authentication denied, retry the previous api call by getting refreshed token.
+      const originalConfig = err.config;
+      if (axios.isCancel(err)) {
+        originalConfig._retry = true;
+        return apiService(originalConfig);
+      }
     } catch (error) {
       return Promise.reject(error);
     }
