@@ -11,11 +11,12 @@ Before you begin, ensure you have the following installed:
 Node.js &
 npm (Node Package Manager)
 
-## Installation
+## Installation & Starting Project
 - Clone the repository: `git clone https://github.com/rizwan-rizu/movieexplorer.git`
 - Navigate to the project folder: `cd movieexplorer`
 - Install dependencies: `npm install`
 - Run the the appliation locally: `npm start`
+- When the application is launched, a mock login page appears; entering any value in the username and password fields results in a redirect to the home page.
 
 ## Technology Used
 - Typescript
