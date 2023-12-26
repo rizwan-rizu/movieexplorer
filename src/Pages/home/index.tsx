@@ -63,7 +63,7 @@ const Home = () => {
       <p className="font-medium text-black dark:text-gray-200 text-xl">{title}</p>
       <div className="overflow-auto no-scrollbar w-full mx-auto py-2">
         <div className="flex">
-          {array.map((x: iMovie, idx: number) => (
+          {array.length > 0 ? array.map((x: iMovie, idx: number) => (
             <div key={x.id} ref={(array.length === (idx + 1)) ? elementRef : null} className="flex-shrink-0 p-2">
               <img
                 className="rounded-xl cursor-pointer transition duration-300 ease-in-out hover:scale-110"
@@ -72,7 +72,7 @@ const Home = () => {
                 onClick={() => navigate(`/movie/${x.id}`)}
               />
             </div>
-          ))}
+          )) : <p className="font-medium text-black dark:text-gray-200 ml-2">Movies not found.</p>}
           {loading && !error && <LoadingSpinner />}
           {!loading && error && <Snackbar onClose={setError} message={"An error has occured. We are unable to show data currently. Please try again by refresh your page."} />}
         </div>
