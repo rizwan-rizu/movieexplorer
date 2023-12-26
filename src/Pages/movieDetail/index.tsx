@@ -3,15 +3,15 @@ import { getMovieDetail, getMovieReviews } from "./api";
 import { useParams } from "react-router-dom";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCircle, faBookmark, faHeart } from '@fortawesome/free-regular-svg-icons'
+import { castColumn } from "./tableColumn";
+import { StoreContext } from "../../store";
+import { setStorageItem } from "../../utility";
+import { iMovie } from "../home/interface";
 import Template from "../template";
 import moment from "moment";
 import LoadingSpinner from "../../common/loadingSpinner";
 import Snackbar from "../../common/snackbar";
 import Table from "../../common/table";
-import { castColumn } from "./tableColumn";
-import { StoreContext } from "../../store";
-import { setStorageItem } from "../../utility";
-import { iMovie } from "../home/interface";
 
 const MovieDetail = () => {
   const { movieId } = useParams()
@@ -84,11 +84,11 @@ const MovieDetail = () => {
                 <span className="text-black dark:text-gray-200">{movie?.runtime}</span>
               </div>
               <div className="pt-4 pb-2">
-                <button className="bg-gray-200 dark:bg-gray-600 py-2 px-5 hover:bg-gray-300 dark:hover:bg-gray-500 text-black dark:text-gray-200 font-normal rounded-full" onClick={handleAddToWatchlist}                >
+                <button data-testid="watchlist-button" className="bg-gray-200 dark:bg-gray-600 py-2 px-5 hover:bg-gray-300 dark:hover:bg-gray-500 text-black dark:text-gray-200 font-normal rounded-full" onClick={handleAddToWatchlist}                >
                   <FontAwesomeIcon className="mr-2" icon={faBookmark} />
                   Add to Watchlist
                 </button>
-                <button className="ml-1 bg-gray-200 dark:bg-gray-600 py-2 px-5 hover:bg-gray-300 dark:hover:bg-gray-500 text-black dark:text-gray-200 font-normal rounded-full" onClick={handleMarkAsFavourite}>
+                <button data-testid="favorite-button" className="ml-1 bg-gray-200 dark:bg-gray-600 py-2 px-5 hover:bg-gray-300 dark:hover:bg-gray-500 text-black dark:text-gray-200 font-normal rounded-full" onClick={handleMarkAsFavourite}>
                   <FontAwesomeIcon className="mr-2" icon={faHeart} />
                   Mark as Favourite
                 </button>

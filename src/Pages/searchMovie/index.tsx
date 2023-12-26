@@ -42,7 +42,8 @@ const SearchMovies = () => {
         </div>
         <div className="text-center flex-none md:grow">
           <input
-            className={`bg-gray-200 dark:bg-gray-600 w-full md:w-[60%] placeholder-black dark:placeholder-white p-3 pl-4 text-lg text-center rounded-full`}
+            data-testid="search-input"
+            className={`bg-gray-200 dark:bg-gray-600 w-full md:w-[60%] placeholder-black text-black dark:text-gray-200 dark:text-white dark:placeholder-white p-3 pl-4 text-lg text-center rounded-full`}
             type="text"
             name="keyword"
             placeholder="Search a movie or series"
@@ -65,12 +66,14 @@ const SearchMovies = () => {
           <div>
             <span className="font-medium text-black dark:text-gray-200 text-md md:text-lg">Filter by: </span>
             <button
+              data-testid="filterby-movie-button"
               className={`bg-${filterBy === 'movie' ? 'black' : 'gray-200'} dark:bg-${filterBy === 'movie' ? 'black' : 'gray-600'} py-1 px-5 mr-1 text-${filterBy === 'movie' ? 'white' : 'black'} dark:text-gray-200 font-normal rounded-full`}
               onClick={() => setFilterBy(prev => (prev === "movie" ? '' : "movie"))}
             >
               Movie
             </button>
             <button
+              data-testid="filterby-tv-button"
               className={`bg-${filterBy === 'tv' ? 'black' : 'gray-200'} dark:bg-${filterBy === 'tv' ? 'black' : 'gray-600'} py-1 px-5 mr-1 text-${filterBy === 'tv' ? 'white' : 'black'} dark:text-gray-200 font-normal rounded-full`}
               onClick={() => setFilterBy(prev => (prev === "tv" ? '' : "tv"))}
             >

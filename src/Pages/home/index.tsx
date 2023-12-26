@@ -74,7 +74,7 @@ const Home = () => {
             </div>
           )) : <p className="font-medium text-black dark:text-gray-200 ml-2">Movies not found.</p>}
           {loading && !error && <LoadingSpinner />}
-          {!loading && error && <Snackbar onClose={setError} message={"An error has occured. We are unable to show data currently. Please try again by refresh your page."} />}
+          {!loading && error && <Snackbar onClose={setError} message={"An error has occured. We are unable to show some data currently. Please try again by refresh your page."} />}
         </div>
       </div>
     </div>

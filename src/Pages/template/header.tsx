@@ -16,7 +16,7 @@ const Header = () => {
     <div className="pb-5 px-7 pt-3 flex justify-between items-center">
       {logoText(navigate)}
       <div>
-        <button className="bg-gray-200 dark:bg-gray-600 py-2 px-5 hover:bg-gray-300 dark:hover:bg-gray-500 text-black dark:text-gray-200 font-normal rounded-full" onClick={() => navigate("/search")}>
+        <button className="bg-gray-200 dark:bg-gray-600 py-2 px-5 hover:bg-gray-300 dark:hover:bg-gray-500 text-black dark:text-gray-200 font-normal rounded-full" data-testid="search-movie-button" onClick={() => navigate("/search")}>
           <FontAwesomeIcon className="mr-2" icon={faSearch} />
           Search Movie
         </button>
