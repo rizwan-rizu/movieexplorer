@@ -1,4 +1,5 @@
-// import { Navigate } from "react-router-dom"
+import { Navigate } from "react-router-dom";
+import { getStorageItem } from "./utility";
 
 interface iProtectedRouteProps {
   element: any
@@ -7,9 +8,9 @@ interface iProtectedRouteProps {
 
 const ProtectedRoute = ({ element, role }: iProtectedRouteProps) => {
 
-  // if (!token) {
-  //   return <Navigate to={'/'} />
-  // }
+  if (getStorageItem("isLogin") !== 'true' && !['/login', '/register'].includes(window.location.pathname)) {
+    return <Navigate to={'/login'} />
+  }
 
   // if (token && !userRoles.length) {
   //   return <Loading />
