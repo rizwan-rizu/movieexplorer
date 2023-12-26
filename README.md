@@ -33,6 +33,7 @@ npm (Node Package Manager)
 - Implemented state management using the context api without any external library installation.
 - For the purpose of code reusability, common components were created to be called whenever necessary.
 - Implemented resoponsiveness so that the site appears well on smaller screens
+- Unit test (not all files but couple).
 - Implemented dark mode
 - Implemented debounce search
 - Implemented infinite scroll
